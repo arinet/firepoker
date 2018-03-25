@@ -1,0 +1,68 @@
+<div ng-show="loginCtrl.registerForm.successMessage" class="alert alert-success">
+  <strong>Success!</strong>
+  <p>{{loginCtrl.registerForm.successMessage}}</p>
+  <a ui-sref="app.login">Login</a>
+</div>
+
+<div ng-show="loginCtrl.registerForm.failMessage" class="alert alert-warning">
+  <strong>Whoops!</strong>
+  <p>{{loginCtrl.registerForm.failMessage}}</p>
+</div>
+
+<form name="form" ng-submit="loginCtrl.createAccount()" novalidate>
+
+  <div class="form-group">
+    <label for="registerName">Name</label>
+    <input ng-model="loginCtrl.registerForm.userName" 
+      type="text" 
+      class="form-control" 
+      id="registerName" 
+      placeholder="Enter your name" 
+      required>
+  </div>
+
+  <div class="form-group">
+    <label for="registerEmail">Email</label>
+    <input ng-model="loginCtrl.registerForm.email" 
+      type="email" 
+      class="form-control" 
+      id="registerEmail" 
+      placeholder="yourname@arinet.com" 
+      required>
+  </div>
+
+  <div class="form-group" collapse="!loginCtrl.registerForm.email">
+    <label for="registerEmailConfirm">Confirm Email</label>
+    <input ng-model="loginCtrl.registerForm.emailConfirm" 
+      type="email" 
+      class="form-control" 
+      id="registerEmailConfirm" 
+      placeholder="validate email" 
+      required>
+  </div>
+
+  <div class="form-group">
+    <label for="registerPassword">Password</label>
+    <input ng-model="loginCtrl.registerForm.pword" 
+      type="password" 
+      class="form-control" 
+      id="registerPassword" 
+      placeholder="password" 
+      required>
+  </div>
+
+  <div class="form-group" collapse="!loginCtrl.registerForm.pword">
+    <label for="registerPasswordConfirm">Confirm Password</label>
+    <input ng-model="loginCtrl.registerForm.pwordConfirm" 
+      type="password" 
+      class="form-control" 
+      id="registerPasswordConfirm" 
+      placeholder="confirm password" 
+      required>
+  </div>
+
+  <div busy-Indicator></div>
+
+  <button type="submit" class="btn btn-success pull-right" ng-disabled="form.$invalid">Register</button>
+
+</form>

@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+      <h3>Reset Password</h3>
+      <p>Enter your email address below for an email with a reset link.</p>
+
+      <div ng-show="rstPwrdCtrl.failMessage" class="alert alert-warning">
+        <strong>Whoops!</strong>
+        <p>{{rstPwrdCtrl.failMessage}}</p>
+      </div>
+
+      <div ng-show="rstPwrdCtrl.successMessage" class="alert alert-success">
+        <strong>An email with a link to reset your password has been sent.</strong>
+        <p>{{rstPwrdCtrl.successMessage}}</p>
+        <a ui-sref="app.login">Login</a>
+      </div>
+
+      <form name="form" ng-submit="rstPwrdCtrl.resetPassword()" novalidate>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input ng-model="rstPwrdCtrl.email" type="email" class="form-control" id="email" placeholder="yourname@arinet.com" required>
+        </div>
+
+        <div busy-Indicator></div>
+
+        <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Email Me</button>
+        or <a ui-sref="app.login">Cancel</a>
+
+      </form>
+
+      <br/>
+
+      <br/>
+
+      <div class="alert alert-info">
+        <p>Try a password manager like LastPass to avoid doing this again. </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>

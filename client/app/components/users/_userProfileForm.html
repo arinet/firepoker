@@ -1,0 +1,37 @@
+<div ng-show="userCtrl.profileForm.successMessage" class="alert alert-success">
+  <strong>Success!</strong>
+  <p>{{userCtrl.profileForm.successMessage}}</p>
+</div>
+
+<div ng-show="userCtrl.profileForm.failMessage" class="alert alert-warning">
+  <strong>Whoops!</strong>
+  <p>{{userCtrl.profileForm.failMessage}}</p>
+</div>
+
+<form name="form" ng-submit="userCtrl.updateProfile()" novalidate>
+
+  <div class="form-group">
+    <label for="updateName">Name</label>
+    <input ng-model="userCtrl.profileForm.userName"
+      type="text"
+      class="form-control"
+      id="registerName"
+      placeholder="Enter your name"
+      required>
+  </div>
+
+  <div class="form-group">
+    <label for="updateJobTitle">Job Title</label>
+    <input ng-model="userCtrl.profileForm.jobTitle"
+      type="text"
+      class="form-control"
+      id="registerName"
+      placeholder="Enter your name"
+      required>
+  </div>
+
+  <div busy-Indicator></div>
+
+  <button type="submit" class="btn btn-success pull-right" ng-disabled="form.$invalid">Update Profile</button>
+
+</form>

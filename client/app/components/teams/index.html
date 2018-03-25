@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class='col-xs-12'>
+      <h2>Manage Teams</h2>
+      <p>
+        <button ng-click='teamsCtrl.add(team)' class="btn btn-md btn-primary">Add Team</button>
+      </p>
+
+      <div class="table-responsive">
+        <table class="table" style="background: white">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Description</th>
+              <th># of Players</th>
+              <th>Owner</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="team in teamsCtrl.teams">
+              <td>{{team.name}}</td>
+              <td>{{team.desc}}</td>
+              <td>{{team.players.length}}</td>
+              <td>{{team.owner}}</td>
+              <td class="text-right" >
+                <button ng-disabled='team.owner != teamsCtrl.user.email' ng-click='teamsCtrl.edit(team)' class="btn btn-xs btn-default">Edit</button>
+                <button ng-disabled='team.owner != teamsCtrl.user.email' ng-click='teamsCtrl.delete(team)' class="btn btn-xs btn-danger">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

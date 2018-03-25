@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "ARI Planning Poker",
+  "description": "Shows a notification when a planning game is added to the game queue.",
+  "version": "1.0",
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
+  "content_scripts": [{
+    "matches": ["https://cdn.firebase.com/"],
+    "css": ["style.css"],
+    "js": ["firebase.js", "background.js", "options.js"],
+    "run_at": "document_end"
+  }],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html",
+    "default_title": "ARI - Firepoker"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "background": {
+    "scripts": ["firebase.js", "background.js"]
+  },
+  "permissions": ["notifications", "storage"]
+}

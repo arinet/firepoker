@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <div ng-class="{
+           'col-md-6': dashboardCtrl.games && dashboardCtrl.games.length,
+           'col-md-12': !dashboardCtrl.games || !dashboardCtrl.games.length
+        }">
+
+        <h2>Game Queue </h2>
+        <div class="list-group">
+          <a class="list-group-item" ui-sref="app.play({gid:gameInfo.gameId})" ui-sref-opts="{notify:true, reload:true}" ng-repeat="gameInfo in dashboardCtrl.gameQueue">
+            <h5>{{gameInfo.name}}</h5>
+            <button class="btn btn-xs btn-success pull-right" ui-sref="app.play({gid:gameInfo.gameId})" ui-sref-opts="{notify:true, reload:true}">
+              Play <i class="fa fa-play"></i>
+            </button>
+            <span class="label label-default">{{gameInfo.status}}</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6" ng-if="dashboardCtrl.games">
+        <h2>Moderation Queue </h2>
+        <div class="list-group">
+          <div class="list-group-item" ng-repeat="game in dashboardCtrl.games | orderBy: 'createdOn':true | filter: {owner: dashboardCtrl.user.email}">
+            <h5>{{game.name}}&nbsp;&nbsp;
+              <small>{{game.team.name}}</small>
+              <small class="pull-right">{{game.createdOn | date : 'medium'}}</small>
+            </h5>
+            <p>
+              <span class="label label-default">{{game.status}}</span>
+              <span ng-pluralize count="game.stories.length" when="{'0': '0 stories',
+              'one': '1 story',
+              'other': '{} stories'
+              }"></span>
+            </p>
+            <div class="btn-group" role="group">
+              <button class="btn btn-xs btn-default" ng-click="showWatch = !showWatch; dashboardCtrl.watchUrl(game)">
+                Share <i class="fa fa-share-alt"></i>
+              </button>
+              <button class="btn btn-xs btn-default" ng-click="dashboardCtrl.addStories(game)">
+                Stories <i class="fa fa-list"></i>
+              </button>
+              <button class="btn btn-xs btn-default" ui-sref="app.play({gid:game.$id})" ui-sref-opts="{notify:true, reload:true}">
+                Moderate <i class="fa fa-gavel"></i>
+              </button>
+              <button class="btn btn-xs btn-danger" ng-click="dashboardCtrl.delete(game)">
+                Delete <i class="fa fa-trash"></i>
+              </button>
+              <input type="text" class="copyText fullWidth" ng-model="game.shareLink" ng-show="showWatch" select-text />
+            </div>
+          </div>
+        </div>
+        <span class="row">
+          <button ng-disabled="dashboardCtrl.fromDate.toDateString() == dashboardCtrl.toDate.toDateString()" class="btn btn-primary btn-xs pull-left" ng-click="dashboardCtrl.fetchByDate()">Query By Date</button>
+          <button class="btn btn-primary btn-xs pull-right" ng-click="dashboardCtrl.getPagedData()">More Games</button>
+        </span>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="fromDate">From Date:</label>
+            <input name="fromDate" type="date" class="form-control input-xsmall" ng-model="dashboardCtrl.fromDate" />
+          </div>
+          <div class="col-md-6">
+              <label for="toDate">To Date:</label>
+              <input name="toDate" type="date" class="form-control input-xsmall" ng-model="dashboardCtrl.toDate" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+dist/**
+.sass-cache
+node_modules
+.env
+client/app/templates.js
+.idea
+prod.env
+package-lock.json

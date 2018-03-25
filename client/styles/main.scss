@@ -1,0 +1,293 @@
+@import "base";
+
+/* Will be compiled down to a single stylesheet with your sass files */
+$break-small: 728px;
+
+body, html {
+  height: 100%;
+}
+
+body {
+  padding-top: 65px;
+  background: #dbdbdb url('../content/firepoker-bg-grey.jpg') no-repeat bottom right;
+  background-attachment: fixed;
+}
+
+.navbar.navbar-default {
+  box-shadow: 0 0 15px 0 rgba(0,0,0,0.4);
+}
+
+footer {
+  background: rgba(255,255,255,0.4);
+  padding: 20px 0;
+
+  p {
+    color: #999;
+    font-size: 12px;
+    display: inline;
+    text-transform: uppercase;
+    font-family: $font-family-sans-serif;
+  }
+
+  a {
+    color: #333;
+  }
+}
+
+.comment-container {
+  max-height: 250px;
+  height: 20%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.app-play, .app-watch {
+  .app-footer { display: none }
+}
+
+.block {
+  display: block;
+}
+
+.card-facedown-unplayed {
+  background:url(../content/cardUnplayed.png) repeat;
+}
+
+.story-main {
+  .panel-title a {
+    text-overflow: ellipsis;
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+  }
+}
+
+.story-sidebar {
+  height: calc(100vh - 65px);
+  max-height: calc(100vh - 65px);
+  overflow-y: scroll;
+  padding-top: 10px;
+  .list-group-item {
+    word-wrap: break-word;
+  }
+  @media screen and (max-width: $break-small) {
+
+  }
+}
+
+.page {
+  padding-bottom: 100px;
+}
+
+.iframe-container {
+  margin: 0 -15px;
+}
+
+.jira-iframe {
+  width: 100%;
+  height: calc(100vh - 110px);
+  max-height: calc(100vh - 110px);
+  border: none;
+  display: block;
+  position: absolute;
+}
+
+.sticky-footer {
+  position: absolute;
+  margin-bottom: 0px;
+  bottom: 0;
+  right: 0;
+  margin-right: 0px;
+  height: auto;
+  width: 100%;
+}
+
+.story-active, .story-active:focus {
+  background-color: #eee !important;
+}
+
+.story-estimator {
+  margin-bottom: 0;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.tab-content {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+}
+
+.nav-tabs {
+  margin-bottom: 0;
+}
+
+.bordered {
+  position: relative;
+  padding: 15px 15px 15px;
+  margin: 0 -15px 15px;
+  margin-left: 0;
+  margin-right: 0;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ddd;
+  border-radius: 4px 4px 0 0;
+  box-shadow: none;
+}
+
+.card {
+  width: 50px;
+  height: 80px;
+  color: #333;
+  background-color: #fff;
+  border-color: #adadad;
+  font-size:125%;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: bottom;
+  border: 1px solid;
+  border-radius: 3px;
+  padding-top:15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-facedown {
+  background:url(../content/cardPlayed.png) repeat;
+}
+.player-name {
+  font-size: small;
+  max-width: 95px;
+  word-wrap: break-word;
+  margin: 0 auto;
+}
+
+.gb-btn {
+  margin-top:1em;
+}
+
+.vspace {
+  margin-top:2em;
+}
+
+span[contenteditable=true] {
+  background: rgba(0,0,0,0); /* transparent bg */
+  resize:none; /* disable resizing */
+  display:block;
+  height:inherit;
+  padding:5px;
+}
+
+.btn-start {
+  font-size: 24px;
+  padding: 14px 24px;
+  background-color:#ff0700;
+}
+
+.btn-start:hover {
+  background-color:#ee0700;
+}
+
+.timer-display {
+  letter-spacing: 2px;
+  font-size: 72px;
+  font-weight: bold;
+}
+
+.timer-message {
+  font-size: 36px;
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.social-buttons {
+  margin-top: 5em;
+  height: 40px;
+}
+
+div[contenteditable='true'],
+span[contenteditable='true'] {
+  padding: .5em;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid transparent;
+}
+
+div[contenteditable='true']:hover,
+span[contenteditable='true']:hover {
+  background: #ffffff;
+  border-color: #adadad;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15) inset;
+}
+
+span:focus, span:focus:hover {
+  background: #ffffff;
+  border-color: #69c773;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15) inset;
+}
+
+.panel-body {
+  border-top: 1px dotted #ccc;
+}
+
+//spacing horizontal
+.rowLeft0 {
+  padding-left: 0;
+}
+
+.rowRight0 {
+  padding-right: 0;
+}
+
+.rowBoth0 {
+  padding: 0;
+}
+
+.padLeft5 {
+  padding-left: 5px;
+}
+
+//spacing vertical
+
+.top1 {
+  margin-top: 10px;
+}
+
+//widths
+.fullWidth {
+  width: 100%;
+  max-width: 100%;
+}
+
+
+//overwrites
+
+.btn-xs {
+  padding: 3px 5px;
+}
+
+.copyText {
+  clear: both;
+  padding: 5px;
+  margin: 10px 0;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  top: 10px;
+  position: relative;
+  background-color: #eee;
+  display: block;
+}

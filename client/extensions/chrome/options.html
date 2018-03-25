@@ -1,0 +1,55 @@
+<!Doctype Html>
+<html>
+
+<head>
+  <title>ARI - Firepoker - Options</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <script src="firebase.js"></script>
+  <script src="options.js"></script>
+</head>
+
+<body>
+  <h1>
+    Please Login
+  </h1>
+
+  <form id="loginForm" class="form-horizontal" accept-charset="utf-8">
+
+    <div class="control-group">
+      <label for="userEmail">Email</label>
+      <div class="controls">
+        <input type="email" name="userEmail" placeholder="yourname@example.com" required>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="password">Password</label>
+      <div class="controls">
+        <input type="password" name="password" placeholder="password" required>
+      </div>
+    </div>
+    <button type="button" id="loginBtn"> Login </button>
+  </form>
+
+  <form id="optForm" class="form-horizontal" accept-charset="utf-8">
+    <fieldset>
+      <legend>What events would you like to be notified about?</legend>
+      <b>Your Game Queue</b> </br>
+      <input type="checkbox" name="gqAdd" />Added
+      <br />
+      <input type="checkbox" name="gqMod"  />Modified
+      <br />
+      <input type="checkbox" name="gqDel" />Removed
+      <br />
+      <b>Games You Create</b> </br>
+      <input type="checkbox" name="gPlayed" />Played by all players
+      <br />
+    </fieldset>
+    <button type="button" id="saveBtn">Save</button>
+  </form>
+</body>
+
+
+
+
+</html>

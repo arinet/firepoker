@@ -1,0 +1,116 @@
+<div class="modal-header">
+  <h4 class="modal-title">Stories</h4>
+</div>
+
+<div ng-show="storyCtrl.errorMsg" class="alert alert-warning">
+  <strong>Whoops!</strong>
+  <p>{{storyCtrl.errorMsg}}</p>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+
+    <!-- Story List & Estimation Flag -->
+    <div class="col-md-5">
+      <span>This game has {{storyCtrl.stories.length}} stories</span>
+      <ul class="list-group" style="max-height: 72vh; overflow-y: scroll">
+        <li class="list-group-item" ng-repeat="story in storyCtrl.stories track by $index">
+          <button ng-click='storyCtrl.deleteStory($index)' class="btn btn-xs btn-danger pull-right">
+            <i class="fa fa-close"></i>
+          </button>
+          {{story.title}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-7">
+      <div ng-init="tab=1">
+
+        <ul class="nav nav-tabs">
+          <li><a ng-click="tab = 1">Jira Import</a></li>
+          <li><a ng-click="tab = 2">Free-form</a></li>
+          <li><a ng-click="tab = 3">Structured</a></li>
+          <li><a ng-click="tab = 4">Bulk Copy</a></li>
+        </ul>
+
+        <div class="well">
+
+          <div ng-show="tab == 1">
+            <div class="tab-pane active" id="jiraImport">
+              <form name="formJira" ng-submit="storyCtrl.loadJiraStories()" novalidate>
+                <div class="form-group">
+                  <label for="stories">Import stories from JIRA (optional)</label>
+                  <input type="text" ng-model="storyCtrl.jqlQuery" type="text" class="form-control" placeholder="Enter JQL Query here...."> </input>
+                  <div busy-Indicator></div>
+                </div>
+                <button type="submit" class="btn btn-success" ng-disabled="formStructured.$invalid">Import</button>
+              </form>
+            </div>
+          </div>
+
+          <div ng-show="tab == 2">
+            <div class="tab-pane" id="free-form">
+              <form name="formFreeForm" ng-submit="storyCtrl.addFreeFormStory()">
+                <div class="form-group">
+                  <label for="free-form-story-title">Story</label>
+                  <textarea ng-model="storyCtrl.freeFormStory.title" class="form-control" id="free-form-story-title" rows="3" required></textarea>
+
+                  <p class="help-block">Type or copy and paste your story as free-form text.</p>
+                </div>
+                <div class="form-group">
+                  <label for="free-form-story-notes">Notes</label>
+                  <textarea ng-model="storyCtrl.freeFormStory.notes" class="form-control" id="free-form-story-notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success" ng-disabled="formFreeForm.$invalid">Add story</button>
+              </form>
+            </div>
+          </div>
+
+          <div ng-show="tab == 3">
+            <div class="tab-pane" id="structured">
+              <form name="formStructured" ng-submit="storyCtrl.addStructuredStory()" novalidate>
+                <div class="form-group">
+                  <label for="structured-story-as-a-an">As a/an...</label>
+                  <input ng-model="storyCtrl.structuredStory.asA" type="text" class="form-control" id="structured-story-as-a-an" required>
+                </div>
+                <div class="form-group">
+                  <label for="structured-story-i-would-like-to">I would like to...</label>
+                  <input ng-model="storyCtrl.structuredStory.iWouldLikeTo" type="text" class="form-control" id="structured-story-i-would-like-to" required>
+                </div>
+                <div class="form-group">
+                  <label for="structured-story-so-that">So that...</label>
+                  <input ng-model="storyCtrl.structuredStory.soThat" type="text" class="form-control" id="structured-story-so-that" required>
+                </div>
+                <div class="form-group">
+                  <label for="structured-story-notes">Notes</label>
+                  <textarea ng-model="storyCtrl.structuredStory.notes" class="form-control" id="structured-story-notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success" ng-disabled="formStructured.$invalid">Add story</button>
+              </form>
+            </div>
+          </div>
+
+          <div ng-show="tab == 4">
+            <div class="tab-pane" id="bulkImport">
+              <form name="formStructured" ng-submit="storyCtrl.addBulkLoadStories()" novalidate>
+                <div class="form-group">
+                  <label for="stories">Import stories (optional, one per line)</label>
+                  <textarea ng-model="storyCtrl.bulkLoadStories" rows="10" class="form-control" id="stories" placeholder="Enter stories"></textarea>
+                  <p class="help-block">Copy and paste to import stories into your game.</p>
+                </div>
+                <button type="submit" class="btn btn-success" ng-disabled="formStructured.$invalid">Add stories</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button ng-click="$close(storyCtrl.stories)" class="btn btn-success">Save</button>
+  <button class="btn btn-default" ng-click="$dismiss('cancel')">Cancel</button>
+</div>

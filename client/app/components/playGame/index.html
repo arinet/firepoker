@@ -1,0 +1,144 @@
+<div class="container-fluid full-height">
+  <div class="row full-height">
+
+    <!-- Story List & Estimation Flag -->
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height story-sidebar">
+      <h4>{{playCtrl.game.name}}</h4>
+      <p>{{playCtrl.game.description}}</p>
+      <div class="list-group">
+        <a class="list-group-item" href ng-click="playCtrl.setActiveStory($index)"
+          ng-repeat="story in playCtrl.game.stories track by $index"
+          ng-class="{ 'story-active': $index == playCtrl.activeStoryIdx }">
+          <span ng-if="story.jiraKey" class="label label-info">{{story.jiraKey}}</span>
+          {{story.title}}
+          <span ng-show="story.comments">
+            <i class="glyphicon glyphicon-comment"></i>
+          </span>
+          <span ng-if="story.accepted" class="label label-success"> Accepted - {{story.avgEstimate}}</span>
+          <button type="button" class="btn btn-default btn-xs" aria-label="Refresh" ng-show="$index == playCtrl.activeStoryIdx" ng-click="playCtrl.refreshGame()">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+          </button>
+          <div ng-repeat="player in story.players" class="clearfix">
+            <span ng-show='player.email == playCtrl.user.email && !player.estimate' class="label label-warning pull-right">Needs Estimation</span>
+            <span ng-show='player.email == playCtrl.user.email && player.estimate'>My Estimate
+              <span class="badge">{{player.estimate}}</span>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Estimate story -->
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 story-main full-height">
+
+      <div ng-if="!playCtrl.activeStory" style="padding-top: 4em" class="text-center">
+          <h4 class="text-muted">If you are playing a game with JIRA Stories, please login to
+            <a href="https://{{playCtrl.jiraUrl}}secure/Dashboard.jspa" target="_blank">JIRA</a>
+          </h4>
+        <h4 class="text-muted">Select a story to continue.</h4>
+      </div>
+
+      <div class="full-height iframe-container">
+        <iframe class="jira-iframe" ng-if='playCtrl.activeStory.href' ng-src='{{playCtrl.activeStory.href}}'></iframe>
+      </div>
+
+        <div class="sticky-footer"  ng-if="playCtrl.activeStory">
+
+          <div class="panel panel-default story-estimator">
+
+            <!-- Comments -->
+            <div class="panel-body" ng-show="playCtrl.showComments">
+              <div class="list-inline comment-container">
+                <div ng-repeat='comm in playCtrl.activeStory.comments track by $index' class="row">
+                  <div class="col-xs-4 col-sm-2 text-right">
+                    <h6 style="margin-top: 5px" ng-class="{'text-success': comm.name === playCtrl.user.name }">{{comm.name}}</h6>
+                  </div>
+                  <div class="col-xs-8 col-sm-10">
+                    <p ng-class="{'text-success': comm.name === playCtrl.user.name }">{{comm.comment}}</p>
+                  </div>
+                </div>
+              </div>
+              <form name="name" class="commentForm top1" ng-submit="playCtrl.addComment(playCtrl.userComment)">
+                <span ng-if="!appCtrl.isAuthenticated()" class="col-md-3 rowLeft0">
+                  <input type="text" class="form-control" ng-model="playCtrl.name" placeholder="Name*" required>
+                </span>
+                <span ng-class="appCtrl.isAuthenticated() ? 'col-md-11' : 'col-md-8'" class="rowLeft0">
+                  <input type="text" class="form-control" ng-model="playCtrl.userComment" placeholder="Add comment...">
+                </span>
+                <span class="col-md-1 rowBoth0">
+                  <button class="btn btn-primary fullWidth" type="submit">Send</button>
+                </span>
+              </form>
+            </div>
+
+            <!-- Team Votes -->
+            <div class="panel-body" ng-show="playCtrl.showTable">
+              <ul class="list-inline">
+                <li ng-repeat="player in playCtrl.activeStory.players track by player.email">
+                  <p class="player-name text-center">{{player.name}}</p>
+                  <div ng-show='!player.played' class="card card-facedown-unplayed"></div>
+                  <div ng-show="player.played && player.estimate && playCtrl.showCards || player.email == playCtrl.user.email && player.played" class="card text-center" href="#">{{player.estimate}}</div>
+                  <div ng-show="player.played && player.email != playCtrl.user.email && !playCtrl.showCards" class="card card-facedown">&nbsp;</div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Voting Cards -->
+            <div class="panel-body" ng-show="playCtrl.showVote">
+              <ul class="list-inline">
+                <li ng-repeat="card in playCtrl.decks[playCtrl.game.deck]">
+                  <a class="btn btn-default" href="" ng-click="playCtrl.estimate(card)">
+                    {{card}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Panel Footer -->
+            <div class="panel-footer clearfix">
+
+              <h4 class="panel-title">
+                <span class="badge" ng-if="player.estimate">{{playCtrl.activeStory.estimate}}</span>
+                <span ng-hide="playCtrl.activeStory.href" ng-model="playCtrl.activeStory.title" no-line-breaks="true">{{playCtrl.activeStory.title}}</span>
+                <a ng-show="playCtrl.activeStory.href" target="_blank" ng-href="{{playCtrl.activeStory.href}}">{{playCtrl.activeStory.title}}</a>
+
+                <span ng-show='playCtrl.activeStory && playCtrl.activeStory.avgEstimate && playCtrl.isOwner && playCtrl.showAvg' style="display: inline-block; padding-left: 10px;">Est.
+                  <span class="badge">{{playCtrl.activeStory.avgEstimate}}</span>
+                </span>
+
+                <div class="btn-group pull-right" ng-if="playCtrl.isOwner">
+                  <button class="btn btn-group btn-primary btn-xs" ng-click="playCtrl.acceptStory()">Accept Story</button>
+                  <button class="btn btn-group btn-success btn-xs" ng-click='playCtrl.acceptGame()'>Accept Game</button>
+                  <button class="btn btn-group btn-default btn-xs" ng-click='playCtrl.showAvg = !playCtrl.showAvg'>Team Est.</button>
+                </div>
+
+                <div class="btn-group pull-right">
+                  <button type="button" class="btn btn-default btn-xs" ng-click="playCtrl.showComments = !playCtrl.showComments">
+                    <span ng-if="playCtrl.activeStory.comments.length > 0" class="badge">{{playCtrl.activeStory.comments.length}}</span>
+                    <i ng-if="!playCtrl.activeStory.comments.length" class="fa fa-comments"></i> Comments
+                    <i class="fa padLeft5" ng-class="{
+                    'fa-caret-up': !playCtrl.showComments,
+                    'fa-caret-down': playCtrl.showComments}"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="playCtrl.showTable = !playCtrl.showTable">Team Votes
+                    <i class="fa padLeft5" ng-class="{
+                      'fa-caret-up': !playCtrl.showTable,
+                      'fa-caret-down': playCtrl.showTable
+                    }"></i>
+                  </button>
+                  <button ng-if="appCtrl.isAuthenticated()" type="button" class="btn btn-default btn-xs" ng-click="playCtrl.showVote = !playCtrl.showVote">Vote
+                    <i class="fa padLeft5" ng-class="{
+                      'fa-caret-up': !playCtrl.showVote,
+                      'fa-caret-down': playCtrl.showVote
+                    }"></i>
+                  </button>
+                </div>
+
+              </h4>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

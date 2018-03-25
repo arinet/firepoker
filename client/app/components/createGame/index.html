@@ -1,0 +1,48 @@
+<div class="container-fluid full-height">
+
+  <div class="row full-height">
+
+    <!-- Story List & Estimation Flag -->
+    <div class="col-md-3 col-lg-2 full-height story-sidebar">
+      <div class="list-group">
+        <h3>Stories</h3>
+        <a class="list-group-item" ng-click="" ng-repeat="story in createCtrl.stories track by $index">
+          {{story.title}}
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <h1>Create a new game</h1>
+      <p>Add a team of players, who will be notified when the game is ready to play.</p>
+      <form name="form" novalidate>
+        <div class="form-group">
+          <label for="name">Game name</label>
+          <input ng-model="createCtrl.gameName" type="text" class="form-control" id="name" placeholder="Enter game name" required>
+          <p class="help-block">For example: 'FirePoker project'</p>
+        </div>
+        <div class="form-group">
+          <label for="description">Game description (optional)</label>
+          <input ng-model="createCtrl.gameDescription" type="text" class="form-control" id="description" placeholder="Enter game description">
+        </div>
+        <div class="form-group">
+          <label for="team">Choose the team that will play this game.</label>
+          <select class="form-control" id="team" ng-model="createCtrl.team" ng-options="opt as opt.name for opt in createCtrl.teams" required>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="deck">Choose the set of estimate cards you want to use.</label>
+          <select class="form-control" id="deck" ng-model="createCtrl.gameDeck" required>
+            <option value="0">0, 1, 2, 4, 8, 16, 32, 64, 128, and ?</option>
+            <option value="1">0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100, and ?</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" ng-click="createCtrl.addStories()" ng-disabled="!createCtrl.team">Add/Edit Stories</button>
+        <button type="submit" class="btn btn-success" ng-click="createCtrl.createGame()" ng-disabled="form.$invalid || createCtrl.stories.length < 1">Create game</button>
+        or <a ui-sref="app.dashboard">Cancel</a>
+      </form>
+    </div>
+
+  </div>
+
+</div>

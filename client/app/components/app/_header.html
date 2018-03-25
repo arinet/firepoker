@@ -1,0 +1,81 @@
+<nav class="nav navbar navbar-default navbar-fixed-top">
+
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <a type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a href class="navbar-brand" ui-sref="app.dashboard"
+        analytics-on="click"
+        analytics-event="navigate"
+        analytics-category="dashboard">
+        ARI Firepoker
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav" ng-if="appCtrl.isAuthenticated()">
+        <li ui-sref-active="active">
+          <a ui-sref="app.dashboard"
+            analytics-on="click"
+            analytics-event="navigate"
+            analytics-category="dashboard">
+            Games
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.teams"
+            analytics-on="click"
+            analytics-event="navigate"
+            analytics-category="teams">
+            Teams
+          </a>
+        </li>
+        <li>
+          <button ui-sref='app.create'
+            class="btn btn-primary navbar-btn"
+            analytics-on="click"
+            analytics-event="navigate"
+            analytics-category="games">
+            Add Game
+          </button>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" ng-if="appCtrl.isAuthenticated()">
+        <li dropdown>
+          <a href dropdown-toggle class="dropdown-toggle">
+            {{appCtrl.user.name}}
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu" role="menu">
+            <li>
+                <a href ui-sref="app.userProfile"
+                  analytics-on="click"
+                  analytics-event="userProfile"
+                  analytics-category="users">
+                  User Profile
+                </a>
+            </li>
+            <li>
+                <a href ng-click="appCtrl.logOff()"
+                  analytics-on="click"
+                  analytics-event="logout"
+                  analytics-category="users">
+                  Log Out
+                </a>
+              </li>
+          </ul>
+        </li>
+      </ul>
+
+  </div>
+
+  </div>
+
+</nav>
